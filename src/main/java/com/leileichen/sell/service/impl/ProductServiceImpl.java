@@ -1,14 +1,18 @@
 package com.leileichen.sell.service.impl;
 
 
+import com.leileichen.sell.dataTransferObject.CartDTO;
 import com.leileichen.sell.dataobject.ProductInfo;
 import com.leileichen.sell.enums.ProductStatusEnum;
+import com.leileichen.sell.enums.ResultEnum;
+import com.leileichen.sell.exception.SellException;
 import com.leileichen.sell.repository.ProductInfoRepository;
 import com.leileichen.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductInfo findOne(String productId) {
-        return repository.findById(productId).get();
+        return repository.findById(productId).isPresent()? repository.findById(productId).get(): null;
     }
 
     @Override
@@ -37,5 +41,29 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
+    }
+
+    @Override
+    public void increaseStock(List<CartDTO> cartDTOList) {
+
+    }
+
+    @Override
+    @Transactional
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO: cartDTOList) {
+            ProductInfo productInfo = repository.findById(cartDTO.getProductId()).get();
+
+            if(productInfo == null) {
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
+            if (result < 0) {
+                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
+            productInfo.setProductStock(result);
+
+            repository.save(productInfo);
+        }
     }
 }
