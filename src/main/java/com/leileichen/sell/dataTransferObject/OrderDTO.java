@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+// orderDTO = list of orderDetail + orderMaster
 public class OrderDTO {
 
 

@@ -11,6 +11,7 @@ spring:
     url: jdbc:mysql://192.168.1.101/sell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+#如果传的json数据有为null的，则不传
   jackson:
     default-property-inclusion: non_null
 server:

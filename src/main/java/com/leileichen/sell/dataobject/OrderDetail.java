@@ -8,8 +8,10 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
+//hibernate映射的对象
 @Entity
 @Data
+//动态更新时间
 @DynamicUpdate
 public class OrderDetail {
 
