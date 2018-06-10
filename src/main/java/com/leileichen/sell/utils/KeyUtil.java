@@ -13,6 +13,7 @@ public class KeyUtil {
 
         Integer number = random.nextInt(900000) + 100000;
 
+        // 由现在的时间加上随机数来共同生成
         return System.currentTimeMillis() + String.valueOf(number);
     }
 

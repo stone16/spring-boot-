@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
             orderAmount = orderAmount
                     .add(productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())))  ;
 
-            // 这里要生成随机数的
+            // 这里要生成随机数的, 注意做copy操作的顺序，先赋值再copy有的值会再次变成null的
             BeanUtils.copyProperties(productInfo, orderDetail);
 
             orderDetail.setDetailId(KeyUtil.genUniqueKey());

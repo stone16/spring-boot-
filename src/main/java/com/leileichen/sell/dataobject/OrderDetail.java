@@ -13,6 +13,9 @@ import java.util.Date;
 @Data
 //动态更新时间
 @DynamicUpdate
+
+
+// 订单中的单个产品条目
 public class OrderDetail {
 
     @Id

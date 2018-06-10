@@ -13,6 +13,10 @@ import java.util.Date;
 @Entity
 @Data
 @DynamicUpdate
+/**
+ * Customer can create order, here, class OrderMaster contains basic information in the class. As for OrderDetail, it contains info
+ * for a specific product in the order.
+ */
 public class OrderMaster {
 
     @Id
